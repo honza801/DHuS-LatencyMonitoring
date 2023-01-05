@@ -38,8 +38,8 @@ class NagiosChecker:
 
     def format_result_output(self):
         ecode = 0
-        emsg = 'OK'
         msgs = []
+        perfdata = []
         for stype, delta in self.results.items():
             if delta > self.crit:
                 res = 'CRIT'
@@ -50,7 +50,8 @@ class NagiosChecker:
             else:
                 res = 'OK'
             msgs.append('{} {}:[{}min]'.format(res, stype, int(delta.total_seconds()/60)))
-        return (ecode, ', '.join(msgs))
+            perfdata.append('{}={}'.format(stype.replace(' ', '_'), int(delta.total_seconds()/60)))
+        return (ecode, '{} | {}'.format(', '.join(msgs), ' '.join(perfdata)))
                 
 
 if __name__ == '__main__':
