@@ -1,4 +1,5 @@
 # vim: ai et sw=4 ts=4
+# Author: fous <honza801@gmail.com>, 2023
 from products import Products
 from dhusparser import DhusConfig
 import logging
@@ -53,7 +54,7 @@ class NagiosChecker:
                 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.ERROR)
 	
     with open('config.json') as file:
         config = json.load(file)
