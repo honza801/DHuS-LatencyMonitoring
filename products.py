@@ -34,17 +34,17 @@ class Products:
 
     def _get_filter_from_product(self, product):
         if 'type' in product:
-            return "startswith(Name,'{}')".format(product['type'])
+            return f"startswith(Name,'{product['type']}')"
         elif 'id' in product:
-            return "Id eq '{}'".format(product['id'])
+            return f"Id eq '{product['id']}'"
         elif 'filter' in product:
             return product['filter']
 
     def get_first_entry(self):
-        return Entry(self.xmlroot.find('{{{}}}entry'.format(self.entryns)))
+        return Entry(self.xmlroot.find(f'{{{self.entryns}}}entry'))
     
     def __repr__(self):
-        return 'url:{}'.format(self.url)
+        return f'url:{self.url}'
         
 class Entry:
 
@@ -55,19 +55,19 @@ class Entry:
         self.xmlpart = xmlpart
 
     def get_id(self):
-        eid = self.xmlpart.find('{{{}}}properties/{{{}}}Id'.format(self.propsns, self.datans))
+        eid = self.xmlpart.find(f'{{{self.propsns}}}properties/{{{self.datans}}}Id')
         return eid.text
 
     def get_ingestion_datetime(self):
-        ig = self.xmlpart.find('{{{}}}properties/{{{}}}IngestionDate'.format(self.propsns, self.datans))
+        ig = self.xmlpart.find(f'{{{self.propsns}}}properties/{{{self.datans}}}IngestionDate')
         return datetime.fromisoformat(ig.text)
 
     def get_creation_datetime(self):
-        ig = self.xmlpart.find('{{{}}}properties/{{{}}}CreationDate'.format(self.propsns, self.datans))
+        ig = self.xmlpart.find(f'{{{self.propsns}}}properties/{{{self.datans}}}CreationDate')
         return datetime.fromisoformat(ig.text)
 
     def __repr__(self):
-        return 'Id:{} IngestionDate:{} CreationDate:{}'.format(self.get_id(), self.get_ingestion_datetime(), self.get_creation_datetime())
+        return f'Id:{self.get_id()} IngestionDate:{self.get_ingestion_datetime()} CreationDate:{self.get_creation_datetime()}'
 
 
 if __name__ == '__main__':

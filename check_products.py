@@ -49,7 +49,7 @@ class NagiosChecker:
                 if ecode == 0: ecode = 1
             else:
                 res = 'OK'
-            msgs.append('{} {}:[{}min]'.format(res, stype, int(delta.total_seconds()/60)))
+            msgs.append(f'{res} {stype}:[{int(delta.total_seconds()/60)}min]')
             perfdata.append('{}={}'.format(stype.replace(' ', '_'), int(delta.total_seconds()/60)))
         return (ecode, '{} | {}'.format(', '.join(msgs), ' '.join(perfdata)))
                 

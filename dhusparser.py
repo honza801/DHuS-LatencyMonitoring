@@ -13,7 +13,7 @@ class DhusConfig:
 
     def get_active_synchronizers(self):
         filtered = []
-        synchronizers = self.xmlroot.findall('./{{{0}}}synchronizers/'.format(self.namespace))
+        synchronizers = self.xmlroot.findall(f'./{{{self.namespace}}}synchronizers/')
         for synchronizer in synchronizers:
             new_synch = Synchronizer(synchronizer)
             if new_synch.is_active():
@@ -29,25 +29,25 @@ class Synchronizer:
         self.xmlpart = xmlpart
 
     def get_label(self):
-        return self.xmlpart.find('./{{{}}}label'.format(self.namespace)).text
+        return self.xmlpart.find(f'./{{{self.namespace}}}label').text
 
     def get_url(self):
-        return self.xmlpart.find('./{{{}}}serviceUrl'.format(self.namespace)).text
+        return self.xmlpart.find(f'./{{{self.namespace}}}serviceUrl').text
 
     def get_login(self):
-        return self.xmlpart.find('./{{{}}}serviceLogin'.format(self.namespace)).text
+        return self.xmlpart.find(f'./{{{self.namespace}}}serviceLogin').text
 
     def get_password(self):
-        return self.xmlpart.find('./{{{}}}servicePassword'.format(self.namespace)).text
+        return self.xmlpart.find(f'./{{{self.namespace}}}servicePassword').text
 
     def is_active(self):
-        return self.xmlpart.find('./{{{}}}active'.format(self.namespace)).text in ['True', 'true']
+        return self.xmlpart.find(f'./{{{self.namespace}}}active').text in ['True', 'true']
 
     def get_filter(self):
-        return self.xmlpart.find('./{{{}}}filterParam'.format(self.namespace)).text
+        return self.xmlpart.find(f'./{{{self.namespace}}}filterParam').text
 
     def __repr__(self):
-        return 'label:{} active:{}'.format(self.get_label(), self.is_active())
+        return f'label:{self.get_label()} active:{self.is_active()}'
 
 
 if __name__ == '__main__':
