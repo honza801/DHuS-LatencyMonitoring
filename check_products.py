@@ -26,13 +26,13 @@ class NagiosChecker:
         for syn in dhusconfig.get_active_synchronizers():
             self.local_products.load_xml({'filter': syn.get_filter()})
             loc_entry = self.local_products.get_first_entry()
-            logging.info(self.local_products)
-            logging.info(loc_entry)
+            logging.debug(self.local_products)
+            logging.debug(loc_entry)
         
             syn_products = Products(syn.get_url(), syn.get_login(), syn.get_password(), {'id': loc_entry.get_id()})
             syn_entry = syn_products.get_first_entry()
-            logging.info(syn_products)
-            logging.info(syn_entry)
+            logging.debug(syn_products)
+            logging.debug(syn_entry)
 
             self.results[syn.get_label()] = loc_entry.get_creation_datetime() - syn_entry.get_creation_datetime()
 
@@ -51,11 +51,16 @@ class NagiosChecker:
                 res = 'OK'
             msgs.append(f'{res} {stype}:[{int(delta.total_seconds()/60)}min]')
             perfdata.append('{}={}'.format(stype.replace(' ', '_'), int(delta.total_seconds()/60)))
-        return (ecode, '{} | {}'.format(', '.join(msgs), ' '.join(perfdata)))
+        nagios_result = '{} | {}'.format(', '.join(msgs), ' '.join(perfdata))
+        logging.info(f'{nagios_result} | exit code:{ecode}')
+        return (ecode, nagios_result)
                 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.ERROR)
+    logging.basicConfig(
+        level=logging.INFO,
+        filename='/var/dhus/latency-monitoring.log',
+        format='%(asctime)s %(message)s')
 	
     with open('config.json') as file:
         config = json.load(file)
