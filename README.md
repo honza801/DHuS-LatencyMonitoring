@@ -1,3 +1,10 @@
+### Installation
+
+```
+apt install -y python3-virtualenv
+virtualenv .
+```
+
 ### Usage
 
 ```
