@@ -30,7 +30,8 @@ class Products:
         try:
             self.xmlroot = ET.fromstring(self.xmltext)
         except:
-            logging.critical('Error parsing xml document')
+            logging.critical(f'Error parsing xml document {self.url}')
+            raise
 
     def _get_filter_from_product(self, product):
         if 'type' in product:

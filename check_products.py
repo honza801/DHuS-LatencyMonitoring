@@ -29,12 +29,15 @@ class NagiosChecker:
             logging.debug(self.local_products)
             logging.debug(loc_entry)
         
-            syn_products = Products(syn.get_url(), syn.get_login(), syn.get_password(), {'id': loc_entry.get_id()})
-            syn_entry = syn_products.get_first_entry()
-            logging.debug(syn_products)
-            logging.debug(syn_entry)
+            try:
+                syn_products = Products(syn.get_url(), syn.get_login(), syn.get_password(), {'id': loc_entry.get_id()})
+                syn_entry = syn_products.get_first_entry()
+                logging.debug(syn_products)
+                logging.debug(syn_entry)
 
-            self.results[syn.get_label()] = loc_entry.get_creation_datetime() - syn_entry.get_creation_datetime()
+                self.results[syn.get_label()] = loc_entry.get_creation_datetime() - syn_entry.get_creation_datetime()
+            except:
+                self.results[syn.get_label()] = timedelta(minutes=9999)
 
     def format_result_output(self):
         ecode = 0
