@@ -20,3 +20,4 @@ Fill `config.json` properly. Get yourself inspired by `config.json.template`.
 source bin/activate
 python ./check_products.py
 ```
+
