@@ -10,6 +10,10 @@ virtualenv .
 pip install -r requirements.txt
 ```
 
+### Configuration
+
+Fill `config.json` properly. Get yourself inspired by `config.json.template`.
+
 ### Usage
 
 ```
